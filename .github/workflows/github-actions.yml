@@ -27,7 +27,7 @@ jobs:
 
       - name: Apply Kubernetes Manifests with Inputs
         run: |
-          echo "manifest updated ${{ github.event.inputs.release }}"
+          echo "manifest updated ${{ inputs.release }}"
 
       - name: Verify Deployment
         run: |
