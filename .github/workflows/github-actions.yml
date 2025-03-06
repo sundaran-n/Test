@@ -23,7 +23,7 @@ jobs:
       - name: "Install Kubectl"
         uses: alexellis/arkade-get@23907b6f8cec5667c9a4ef724adea073d677e221
         with:
-          kubectl: latest
+          kubectl: v1.26.0
       - name: Configure Kubeconfig
         uses: azure/k8s-set-context@v4
         with:
@@ -31,7 +31,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Apply Kubernetes Manifests with Inputs
         run: |
-          kubectl get pod
+          kubectl --version
           echo "manifest updated ${{ inputs.release }}"
 
       - name: Verify Deployment
