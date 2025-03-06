@@ -18,12 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions-hub/kubectl@master
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: "Install Kubectl"
-        uses: alexellis/arkade-get@23907b6f8cec5667c9a4ef724adea073d677e221
-        with:
-          kubectl: v1.26.0
       - name: Configure Kubeconfig
         uses: azure/k8s-set-context@v4
         with:
