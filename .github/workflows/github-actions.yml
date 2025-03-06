@@ -20,11 +20,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Set up kubectl
-        run: |
-          echo "cluster configured"
-
+      - name: Configure Kubeconfig
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Apply Kubernetes Manifests with Inputs
         run: |
           echo "manifest updated ${{ inputs.release }}"
