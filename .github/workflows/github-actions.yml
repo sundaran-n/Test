@@ -31,7 +31,8 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Apply Kubernetes Manifests with Inputs
         run: |
-          kubectl --version
+          kubectl version
+          kubectl config get-contexts
           echo "manifest updated ${{ inputs.release }}"
 
       - name: Verify Deployment
