@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions-hub/kubectl@master
       - name: Checkout Repository
         uses: actions/checkout@v4
 
