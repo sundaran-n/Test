@@ -16,28 +16,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
         with:
-          version: 'latest' # Specify a stable version if needed, e.g., '1.27.0'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
 
-      - name: Configure Kubeconfig
-        run: |
-          kubectl version
+      - name: Authenticate with EKS
+        run: aws eks update-kubeconfig --name naapdev --region us-east-1
 
-      - name: Get Kubernetes Pods
+      - name: Deploy to EKS
         run: |
-          kubectl get pods -A
-
-      - name: Apply Kubernetes Manifests with Inputs
-        run: |
-          kubectl version
-          kubectl config get-contexts
-          echo "Manifest updated for release: ${{ github.event.inputs.release }}"
-
-      - name: Verify Deployment
-        run: |
-          echo "Deployment completed successfully."
+          kubectl get pod
