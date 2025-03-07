@@ -6,11 +6,9 @@ on:
       release:
         description: 'Please provide the release version'
         required: true
-        default: ''
       rabbitmq:
         description: 'Please provide the image tag'
         required: true
-        default: ''
 
 jobs:
   deploy:
@@ -21,23 +19,28 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest' # Specify a stable version if needed, e.g., '1.27.0'
+
       - name: Configure Kubeconfig
         run: |
-          echo "${{ secrets.KUBECONFIG }}" > kubeconfig
-          export KUBECONFIG=$(pwd)/kubeconfig
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
           kubectl config get-contexts
 
       - name: Get Kubernetes Pods
-        uses: actions-hub/kubectl@master
-        with:
-          args: get pods -A
-          
+        run: |
+          kubectl get pods -A
+
       - name: Apply Kubernetes Manifests with Inputs
         run: |
           kubectl version
           kubectl config get-contexts
-          echo "manifest updated ${{ inputs.release }}"
+          echo "Manifest updated for release: ${{ github.event.inputs.release }}"
 
       - name: Verify Deployment
         run: |
-          echo "Deployment completed"
+          echo "Deployment completed successfully."
