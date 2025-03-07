@@ -18,11 +18,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions-hub/kubectl@1.14.3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: actions-hub/kubectl@master
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Get Kubernetes Pods
+        uses: actions-hub/kubectl@master
         with:
-          args: get pods
+          args: get pods -A
+          
       - name: Apply Kubernetes Manifests with Inputs
         run: |
           kubectl version
