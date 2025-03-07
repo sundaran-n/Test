@@ -21,7 +21,7 @@ jobs:
 
        - name: Configure kubectl
          run: |
-           ls -ltr ~
+           ls -ltra ~
            echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
            kubectl config use-context ${{ secrets.KUBECONFIG }}
            kubectl config get-contexts
