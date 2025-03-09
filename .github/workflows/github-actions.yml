@@ -12,6 +12,8 @@ on:
 
 jobs:
   deploy:
+    env:
+      POD_KUBECONFIG: '${{ github.workspace }}/.kube/pod-kubeconfig'
     name: Deployment
     runs-on: ubuntu-latest
 
@@ -21,8 +23,6 @@ jobs:
 
        - name: Configure kubectl
          run: |
-           ls -ltra ~
+           mkdir -p '${{ github.workspace }}/.kube' \
+            && echo '${{ secrets.KubeConfig}}' | base64 -d > $POD_KUBECONFIG
            kubectl get pod
-           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-           kubectl config use-context ${{ secrets.KUBECONFIG }}
-           kubectl config get-contexts
