@@ -25,4 +25,6 @@ jobs:
          run: |
            mkdir -p '${{ github.workspace }}/.kube' \
             && echo '${{ secrets.KubeConfig}}' | base64 -d > $POD_KUBECONFIG
+           kubectl version
+           kubectl config get-contexts
            kubectl get pod
