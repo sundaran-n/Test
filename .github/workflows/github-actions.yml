@@ -23,8 +23,13 @@ jobs:
 
        - name: Configure kubectl
          run: |
-           mkdir -p '${{ github.workspace }}/.kube' \
-            && echo '${{ secrets.KUBECONFIG}}' | base64 -d > $POD_KUBECONFIG
-           kubectl version
-           kubectl config get-contexts
-           kubectl get pod
+           mkdir -p '${{ github.workspace }}/.kube'
+           echo '${{ secrets.KubeConfig }}' | base64 --decode > $POD_KUBECONFIG
+           export KUBECONFIG=$POD_KUBECONFIG
+           echo "KUBECONFIG=$POD_KUBECONFIG" >> $GITHUB_ENV
+
+       - name: Verify Kubernetes Connection
+         run: kubectl cluster-info
+
+       - name: List Pods
+         run: kubectl get pods
