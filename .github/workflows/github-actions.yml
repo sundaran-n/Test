@@ -29,5 +29,10 @@ jobs:
        #- name: Verify Kubernetes Connection
        #  run: kubectl cluster-info
 
+       - name: checkout
+         uses: actions/setup-node@v4
+         with:
+           node-version: '20'
+
        - name: List Pods
          run: echo "Image created"
