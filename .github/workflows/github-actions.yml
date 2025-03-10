@@ -18,16 +18,16 @@ jobs:
     runs-on: [self-hosted, kube-deploy] 
 
     steps:
-       - name: Checkout code
-         uses: actions/checkout@v3
+       #- name: Checkout code
+       #  uses: actions/checkout@v3
 
-       - name: Set up Kubectl
-         uses: azure/k8s-set-context@v1
-         with:
-           kubeconfig: ${{ secrets.KUBECONFIG }}
+       #- name: Set up Kubectl
+       #  uses: azure/k8s-set-context@v1
+       #  with:
+       #    kubeconfig: ${{ secrets.KUBECONFIG }}
 
-       - name: Verify Kubernetes Connection
-         run: kubectl cluster-info
+       #- name: Verify Kubernetes Connection
+       #  run: kubectl cluster-info
 
        - name: List Pods
-         run: kubectl get pods
+         run: echo "Image created"
