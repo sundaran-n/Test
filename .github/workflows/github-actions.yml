@@ -15,7 +15,7 @@ jobs:
     env:
       POD_KUBECONFIG: '${{ github.workspace }}/.kube/pod-kubeconfig'
     name: Deployment
-    runs-on: selfhost
+    runs-on: kube-deploy
 
     steps:
        - name: Checkout code
