@@ -27,8 +27,7 @@ jobs:
        #  run: kubectl cluster-info
 
        - name: checkout
-         run: git clone https://github.com/sundaran-n/Test.git
-
+         run: pwd
        - name: List Pods
          run: kubectl version
          
