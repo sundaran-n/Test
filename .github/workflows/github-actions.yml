@@ -1,31 +1,21 @@
-name: Deployment
+name: Deploy to EKS
 
 on:
   workflow_dispatch:
-    inputs:
-      release:
-        description: 'Please provide the release version'
-        required: true
 
 jobs:
   deploy:
-    env:
-      POD_KUBECONFIG: '${{ github.workspace }}/.kube/pod-kubeconfig'
-    name: Deployment
-    runs-on: [self-hosted, kube-deploy] 
-
-    steps:
+    name: Deploy Application
+    runs-on: [self-hosted, kube-deploy]
     
-      - name: Checkout repository
+    permissions:
+      id-token: write 
+      contents: read 
+    steps:
+      - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          path: custom-workspace  # Set the custom workspace directory
 
-      - name: Configure AWS Account
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::977186631846:role/GitHubActionsEKSRole
-          aws-region: us-east-2
-
-      - name: Update Kubeconfig
-        run: aws eks update-kubeconfig --name naapdev --region us-east-2
+      - name: Request OIDC Token
+        run: |
+          echo "Fetching OIDC Token..."
+          curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL"
