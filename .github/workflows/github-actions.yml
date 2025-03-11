@@ -6,9 +6,6 @@ on:
       release:
         description: 'Please provide the release version'
         required: true
-      rabbitmq:
-        description: 'Please provide the image tag'
-        required: true
 
 jobs:
   deploy:
@@ -30,9 +27,7 @@ jobs:
        #  run: kubectl cluster-info
 
        - name: checkout
-         uses: actions/setup-node@v4
-         with:
-           node-version: '20'
+         run: git clone https://github.com/sundaran-n/Test.git
 
        - name: List Pods
-         run: echo "Image created"
+         run: kubectl version
