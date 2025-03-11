@@ -21,5 +21,11 @@ jobs:
         with:
           path: custom-workspace  # Set the custom workspace directory
 
-      - name: Verify workspace
-        run: ls -la custom-workspace  # List files to verify checkout location
+      - name: Configure AWS Account
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::977186631846:role/GitHubActionsEKSRole
+          aws-region: us-east-2
+
+      - name: Update Kubeconfig
+        run: aws eks update-kubeconfig --name naapdev --region us-east-2
