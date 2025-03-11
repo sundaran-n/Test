@@ -30,6 +30,7 @@ jobs:
          run: |
            pwd
            ls -ltr
+           echo $GITHUB_WORKSPACE
        - name: List Pods
          run: kubectl version
          
