@@ -27,7 +27,9 @@ jobs:
        #  run: kubectl cluster-info
 
        - name: checkout
-         run: pwd
+         run: |
+           pwd
+           ls -ltr
        - name: List Pods
          run: kubectl version
          
