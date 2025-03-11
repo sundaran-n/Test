@@ -15,34 +15,11 @@ jobs:
     runs-on: [self-hosted, kube-deploy] 
 
     steps:
-       #- name: Checkout code
-       #  uses: actions/checkout@v3
+    
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: custom-workspace  # Set the custom workspace directory
 
-       #- name: Set up Kubectl
-       #  uses: azure/k8s-set-context@v1
-       #  with:
-       #    kubeconfig: ${{ secrets.KUBECONFIG }}
-
-       #- name: Verify Kubernetes Connection
-       #  run: kubectl cluster-info
-
-       - name: checkout
-         run: |
-           pwd
-           ls -ltr
-           echo $GITHUB_WORKSPACE
-           cat $GITHUB_WORKSPACE/Test/manifest/rabbitmq/rabbitmq-secret.yaml
-           
-       - name: Configure AWS credentialmanifest/rabbitmq/rabbitmq-secret.yamls
-         uses: aws-actions/configure-aws-credentials@v3
-         with:
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-           aws-region: us-east-2
-
-       - name: Authenticate with EKS
-         run: aws eks update-kubeconfig --name naapdev --region us-east-2
-
-       - name: Deploy to EKS
-         run: |
-           kubectl get pod
+      - name: Verify workspace
+        run: ls -la custom-workspace  # List files to verify checkout location
