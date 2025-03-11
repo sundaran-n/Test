@@ -31,10 +31,9 @@ jobs:
            pwd
            ls -ltr
            echo $GITHUB_WORKSPACE
-       - name: List Pods
-         run: kubectl version
-         
-       - name: Configure AWS credentials
+           cat $GITHUB_WORKSPACE/Test/manifest/rabbitmq/rabbitmq-secret.yaml
+           
+       - name: Configure AWS credentialmanifest/rabbitmq/rabbitmq-secret.yamls
          uses: aws-actions/configure-aws-credentials@v3
          with:
            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
